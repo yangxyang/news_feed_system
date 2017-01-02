@@ -11,6 +11,10 @@ class View
         include "views/index.html";
     }
     
+    public function showRegistration() {
+        include "views/register.html";
+    }
+    
     public function showCelebrities($celebrities) {
         include "views/templates/celebrities".TEMPLATE_FILE_ENDING;
     }

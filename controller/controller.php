@@ -40,6 +40,18 @@ class Controller {
         }
         return $html;
     }
+    
+    public function displayRegistration() {
+        $html = null;
+        $action = isset($_GET['action']) ? $_GET['action'] : 'default';
+        switch($action) {
+            case 'index':
+            default:
+                $html = $this->view->showRegistration();
+            break;
+        }
+        return $html;
+    }
 } // END class controller
 
 ?>

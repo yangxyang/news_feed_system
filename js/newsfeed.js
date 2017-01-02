@@ -1,4 +1,16 @@
 $(document).ready(function(){
+    $("#registerButton").click(function(){
+        $.ajax({
+            url: "?action=showRegister" + $(this).val(), 
+            datatype : "html",
+            contentType: "application/json; charset=utf-8",
+            success: function(result) {
+                $("#celebrity").html(result);
+                $("#celebrity").val("");
+        }});
+    });
+    
+    
     $("#language").change(function(){
         $.ajax({
             url: "?action=celebrities&language=" + $(this).val(), 

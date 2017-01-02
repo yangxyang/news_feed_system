@@ -1,3 +1,9 @@
 RewriteEngine on
 
-RewriteRule ^index.php$ / [R=301,L]
+RewriteRule ^index.php$ /NewsFeedSystem [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+#RewriteRule ^register.php$ /NewsFeedSystem/register [R=301,L]
+#RewriteRule \.(gif|jpg|css)$ - [F] 
+#RewriteRule ^views/register.html$ /register [R=301,L]
