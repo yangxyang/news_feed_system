@@ -43,11 +43,13 @@ class Controller {
     
     public function displayRegistration() {
         $html = null;
-        $action = isset($_GET['action']) ? $_GET['action'] : 'default';
+        $action = isset($_POST['username']) ? $_POST['username'] : 'default';
         switch($action) {
-            case 'index':
-            default:
+            case 'default':
                 $html = $this->view->showRegistration();
+            default:
+                $this->model->register();
+                $html = $this->view->showDefault();
             break;
         }
         return $html;

@@ -1,15 +1,23 @@
 $(document).ready(function(){
     $("#register").click(function(){
-        $.get( "index.php"
+       
+        $("#regform").submit();
+       
+        /*
+        $.post( 
+            "register.php", 
+            {   action: "register", 
+                username: $("#username").val(),   
+                firstname: $("#firstname").val(),
+                lastname: $("#lastname").val(),
+                email: $("#email").val(),
+                password: $("#password").val()    
+            },
+            function(data) {
+                alert("success");
+            }
         );
-       $.post( "register.php", 
-                    {   action: "register", 
-                        username: $("#username").val,   
-                        firstname: $("#firstname").val,
-                        lastname: $("#lastname").val,
-                        email: $("#email").val,
-                        password: $("#password").val    } 
-        );
+        */
 
     
     });
