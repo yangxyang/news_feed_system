@@ -8,7 +8,15 @@ class View
     }
     
     public function showDefault() {
-        include "views/index.html";
+        //include "views/index.html";
+        include "views/templates/header".TEMPLATE_FILE_ENDING;  
+        if (isset($_SESSION["username"])) {
+            include "views/templates/login_logged".TEMPLATE_FILE_ENDING;
+        }
+        else {
+            include "views/templates/login_unlogged".TEMPLATE_FILE_ENDING;
+        }  
+        include "views/templates/main".TEMPLATE_FILE_ENDING;
     }
     
     public function showRegistration() {

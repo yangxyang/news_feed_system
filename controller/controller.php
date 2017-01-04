@@ -17,41 +17,38 @@ class Controller {
     
     public function display() {
         $html = null;
-        $action = isset($_GET['action']) ? $_GET['action'] : 'default';
+        $action = isset($_POST['user']) ? $_POST['user'] : 'default';
         switch($action) {
-            case 'tweets':
-                //if(!$this->isJSONRequest())
-                //    break;
-                $tweets = $this->model->getTweets($_GET['language'], $_GET['celebrity']);
-                $html = $this->view->showTweets($tweets);
-            break;
 
-            case 'celebrities':
-               // if(!$this->isJSONRequest())
-              //      break;
-                $celebrities = $this->model->getCelebrities($_GET['language']);
-                $html = $this->view->showCelebrities($celebrities);
-            break;
-
-            case 'index':
-            default:
+            case 'default':
                 $html = $this->view->showDefault();
-            break;
+                break;
+            default:
+                $myfile = fopen("log.txt", "a") ;
+                $result = $this->model->login();
+                $html = $this->view->showDefault();
+                fwrite($myfile, $html);
+                fclose($myfile);
         }
         return $html;
     }
     
     public function displayRegistration() {
+        //$myfile = fopen("log.txt", "a") ;
+        //fwrite($myfile, "displayRegistration");
         $html = null;
         $action = isset($_POST['username']) ? $_POST['username'] : 'default';
         switch($action) {
             case 'default':
+                //fwrite($myfile, "username not found");
                 $html = $this->view->showRegistration();
+                break;
             default:
+                //fwrite($myfile, "username found");
                 $this->model->register();
-                $html = $this->view->showDefault();
-            break;
+                //$html = $this->view->showDefault();
         }
+        //fclose($myfile);
         return $html;
     }
 } // END class controller

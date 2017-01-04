@@ -16,6 +16,7 @@
 <body>
     
     <!-- login -->
+    <div id="login_field"></div>
     <a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
     <a href="register.php">Register</a>
 
@@ -23,7 +24,7 @@
         <div class="modal-dialog">
             <div class="loginmodal-container">
                 <h1>Login to Your Account</h1><br>
-                <form>
+                <form id="loginform" method="post" action="#">
                     <input type="text" name="user" placeholder="Username">
                     <input type="password" name="pass" placeholder="Password">
                     <input type="submit" name="login" class="login loginmodal-submit" value="Login">

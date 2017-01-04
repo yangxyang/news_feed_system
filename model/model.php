@@ -23,6 +23,9 @@ class Model
     }
     
     private function connectToMySQL() {
+        //$myfile = fopen("log.txt", "a") ;
+        //fwrite($myfile, "connectToMySQL");
+        
         $link = mysqli_init();
         $success = mysqli_real_connect(
            $link, 
@@ -34,14 +37,21 @@ class Model
         );
         
         if (!$success) {
+            //fwrite($myfile, "failed");
             die('MySQL Connect Error (' . mysqli_connect_errno() . ') '
             . mysqli_connect_error());
         }
-        
+        else{
+            //fwrite($myfile, "successful");
+        }
+        //fclose($myfile);
         return $link;
     }
     
     public function register() {
+        //$myfile = fopen("log.txt", "a") ;
+        //fwrite($myfile, "register");
+        
         if(! get_magic_quotes_gpc() ) {
             $username = addslashes($_POST['username']);
             $firstname = addslashes($_POST['firstname']);
@@ -61,13 +71,55 @@ class Model
         $gender = 'm';
         $salt = 'abc';
         
-        $stmt = $conn->prepare("INSERT INTO userprofile (nickname, firstname, lastname, email, encrp_password, gender, salt) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssscs", $username, $firstname, $lastname, $email, $password, $gender, $salt);
-        
+        $stmt = $conn->prepare("INSERT INTO userprofile (nickname, firstname, lastname, email, encrp_password, gender, salt) VALUES (?, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param("sssssss", $username, $firstname, $lastname, $email, $password, $gender, $salt);
+        //fwrite($myfile, "prepare statement");
         $stmt->execute();
+        //fwrite($myfile, "execute statement");
         $stmt->close();
         $conn->close();
+        //fclose($myfile);
+    }
+    
+    public function login() {
+        if(! get_magic_quotes_gpc() ) {
+            $username = addslashes($_POST['user']);
+            $password = addslashes($_POST['pass']);
+        } else {
+            $username = $_POST['user'];
+            $password = $_POST['pass'];
+        }
+        //$myfile = fopen("log.txt", "a") ;   
+        $conn = $this->connectToMySQL();
         
+        $stmt = $conn->prepare("SELECT encrp_password FROM userprofile WHERE nickname = ?;");
+        $stmt->bind_param("s", $username);
+        
+        $stmt->execute();
+        
+        $stmt->store_result();
+        if ($stmt->num_rows() == 0) {
+            //fwrite($myfile, "user_not_found\n");
+            return 'user_not_found';
+        }
+        
+        $stmt->bind_result($stored_password);
+        $stmt->fetch();
+        
+        if ($stored_password != $password) {
+            //fwrite($myfile, "password_incorrect\n");
+            return 'password_incorrect';
+        }
+        //fwrite($myfile, "password_correct\n");
+        //fclose($myfile);
+        session_start();
+        $_SESSION["username"] = $username;
+        return 'login_success';
+    }
+    
+    public function logout() {
+        session_unset(); 
+        session_destroy();
     }
     
 } // END class model
