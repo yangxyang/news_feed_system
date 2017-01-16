@@ -1,17 +1,14 @@
 <h2 class="text-center">Mini Twitter</h2>
     
-    <form>
+    <form id="messageform" method="post" action="#">
         <div class="form-group">
             <div class="row">
+                <input type='hidden' name='action' value='new_post' />
                 <div class="form-group form-group-lg">
-                    <input class="form-control input-lg" id="inputlg" type="text">
+                    <input class="form-control input-lg" name="message" type="text" required>
                 </div>
-                <button type="button" class="btn btn-success">Post</button>
+                <button id="postbutton" type="submit" class="btn btn-success">Post</button>
             </div> 
-
-            <div class="row">
-                
-            </div>
         </div>
     </form>
     

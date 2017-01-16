@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    /*
+    $("#postbutton").click(function() {
+        $("#messageform").submit();
+    });
+    
+    
     $("#registerButton").click(function(){
         $.ajax({
             url: "?action=showRegister" + $(this).val(), 
@@ -33,4 +39,5 @@ $(document).ready(function(){
                 $("#tweets").html(result);
         }});
     });
+    */
 });

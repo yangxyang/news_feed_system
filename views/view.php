@@ -7,15 +7,24 @@ class View
 
     }
     
-    public function showDefault() {
-        //include "views/index.html";
-        include "views/templates/header".TEMPLATE_FILE_ENDING;  
+    public function showDefault() { 
         if (isset($_SESSION["username"])) {
-            include "views/templates/login_logged".TEMPLATE_FILE_ENDING;
+            return $this->showLoggedIn();
         }
         else {
-            include "views/templates/login_unlogged".TEMPLATE_FILE_ENDING;
+            return $this->showLoggedOut();
         }  
+    }
+    
+    private function showLoggedIn() {
+        include "views/templates/header".TEMPLATE_FILE_ENDING;  
+        include "views/templates/login_logged".TEMPLATE_FILE_ENDING;
+        include "views/templates/main".TEMPLATE_FILE_ENDING;
+    }
+    
+    private function showLoggedOut() {
+        include "views/templates/header".TEMPLATE_FILE_ENDING;  
+        include "views/templates/login_unlogged".TEMPLATE_FILE_ENDING;
         include "views/templates/main".TEMPLATE_FILE_ENDING;
     }
     

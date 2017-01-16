@@ -2,10 +2,10 @@
 
 class Model
 {
-    // Since we don't have any data, we actually wouldn't need a model.
+    private $mongo = null;
     
     public function __construct() {
-
+        $mongo = new MongoDB();
     }
     
     private function getAPIResponse($path) {
@@ -22,6 +22,20 @@ class Model
         return json_decode($json);
     }
     
+    public function tweet() {
+        if (!isset($_SESSION["username"])) {
+            return;
+        }
+        if(! get_magic_quotes_gpc() ) {
+            $message = addslashes($_POST['message']);
+        } else {
+            $message = $_POST['message'];
+        }
+        $username = $_SESSION["username"];
+        
+        return $this->mongo->tweet();
+    }
+    
     private function connectToMySQL() {
         //$myfile = fopen("log.txt", "a") ;
         //fwrite($myfile, "connectToMySQL");
@@ -31,7 +45,7 @@ class Model
            $link, 
            'localhost', 
            'root', 
-           'root', 
+           'mysql', 
            'USER_NEWS_FEED',
            '3306'
         );
@@ -89,7 +103,6 @@ class Model
             $username = $_POST['user'];
             $password = $_POST['pass'];
         }
-        //$myfile = fopen("log.txt", "a") ;   
         $conn = $this->connectToMySQL();
         
         $stmt = $conn->prepare("SELECT encrp_password FROM userprofile WHERE nickname = ?;");
@@ -99,7 +112,6 @@ class Model
         
         $stmt->store_result();
         if ($stmt->num_rows() == 0) {
-            //fwrite($myfile, "user_not_found\n");
             return 'user_not_found';
         }
         
@@ -107,19 +119,19 @@ class Model
         $stmt->fetch();
         
         if ($stored_password != $password) {
-            //fwrite($myfile, "password_incorrect\n");
             return 'password_incorrect';
         }
-        //fwrite($myfile, "password_correct\n");
-        //fclose($myfile);
+        
         session_start();
         $_SESSION["username"] = $username;
         return 'login_success';
     }
     
     public function logout() {
-        session_unset(); 
-        session_destroy();
+        if (isset($_SESSION["username"])) {
+            session_unset(); 
+            session_destroy();
+        }
     }
     
 } // END class model

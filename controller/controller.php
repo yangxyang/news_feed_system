@@ -17,18 +17,24 @@ class Controller {
     
     public function display() {
         $html = null;
-        $action = isset($_POST['user']) ? $_POST['user'] : 'default';
+        $action = isset($_POST['action']) ? $_POST['action'] : 'default';  
+                
         switch($action) {
-
-            case 'default':
-                $html = $this->view->showDefault();
-                break;
-            default:
-                $myfile = fopen("log.txt", "a") ;
+            case 'login':
                 $result = $this->model->login();
                 $html = $this->view->showDefault();
-                fwrite($myfile, $html);
-                fclose($myfile);
+                break;
+            case 'new_post':
+                $this->model->tweet();
+                $html = $this->view->showDefault();
+                break;
+            case 'logout':
+                $this->model->logout();
+                $html = $this->view->showDefault();
+                break;
+            case 'default':
+            default:
+                $html = $this->model->tweet();//print_r(get_loaded_extensions()); //$this->view->showDefault();
         }
         return $html;
     }

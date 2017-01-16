@@ -19,7 +19,7 @@ function validateForm() {
         valid = false;
         $( "#lastname_field" ).addClass("has-error");
     }
-    if (!/^\w+@[a-z]+[a-z]+\.[a-z][a-z]+$/.test($( "#email" ).val().toLowerCase())) {
+    if (!/^\w+[\.\w+]*@[a-z]+\.[a-z][a-z]+$/.test($( "#email" ).val().toLowerCase())) {
         valid = false;
         $( "#email_field" ).addClass("has-error");
     }

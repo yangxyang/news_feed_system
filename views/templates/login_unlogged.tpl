@@ -1,15 +1,17 @@
 <!-- login -->
-<div class="pull-right"> <h4>
+<h4>
+    <div class="pull-right"> 
         <a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
         <a href="register.php">Register</a>
-    
-</h4></div>
+    </div>
+</h4>
 
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="loginmodal-container">
                 <h1>Login to Your Account</h1><br>
                 <form id="loginform" method="post" action="#">
+                    <input type='hidden' name='action' value='login' />
                     <input type="text" name="user" placeholder="Username">
                     <input type="password" name="pass" placeholder="Password">
                     <input type="submit" name="login" class="login loginmodal-submit" value="Login">
